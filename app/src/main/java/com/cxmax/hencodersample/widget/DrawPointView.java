@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
+import com.cxmax.hencodersample.util.PaintUtils;
+
 /**
  * @describe :
  * @usage :
@@ -36,8 +38,8 @@ public class DrawPointView extends BaseView {
 
     private void initParams() {
         posArrays = new float[]{50, 50, 100, 50, 150, 50, 200, 50, 250, 50, 300, 50, 350, 50};
-        squarePaint = getSquarePointPaint();
-        roundPaint = getRoundPointPaint();
+        squarePaint = PaintUtils.getCapPointPaint(Paint.Cap.SQUARE);
+        roundPaint = PaintUtils.getCapPointPaint(Paint.Cap.ROUND);
     }
 
     @Override
@@ -55,21 +57,5 @@ public class DrawPointView extends BaseView {
 
     private void drawRoundPointsArray(@NonNull Canvas canvas) {
         canvas.drawPoints(posArrays, roundPaint);
-    }
-
-    private Paint getRoundPointPaint() {
-        Paint paint = new Paint();
-        paint.setStrokeWidth(20);
-        paint.setAntiAlias(true);
-        paint.setStrokeCap(Paint.Cap.ROUND);
-        return paint;
-    }
-
-    private Paint getSquarePointPaint() {
-        Paint paint = new Paint();
-        paint.setStrokeWidth(20);
-        paint.setAntiAlias(true);
-        paint.setStrokeCap(Paint.Cap.SQUARE);
-        return paint;
     }
 }

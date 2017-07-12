@@ -9,6 +9,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
+import com.cxmax.hencodersample.util.PaintUtils;
+
 /**
  * @describe :
  * @usage :
@@ -21,10 +23,9 @@ public class DrawHistogramView extends BaseView {
 
     private static final float BASE_LINE = 610;
 
-    private Path coordinate;
-    private Paint hollowPaint;
-    private Paint textPaint;
-    private char[] nameArrays;
+    private Path coordinate , firstPath;
+    private Paint hollowPaint , secondPaint;
+    private Paint textPaint , firstText;
 
     public DrawHistogramView(Context context) {
         this(context, null);
@@ -36,14 +37,17 @@ public class DrawHistogramView extends BaseView {
 
     public DrawHistogramView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initFields();
+        initVariable();
     }
 
-    private void initFields() {
+    private void initVariable() {
         coordinate = getLinePath();
-        hollowPaint = getDefaultHollowPaint();
-        textPaint = getTextSolidPaint();
-        nameArrays = new char[]{'a', 'b', 'c', 'd', 'e', 'L', 'M'};
+        hollowPaint = PaintUtils.getDefaultHollowPaint();
+        textPaint = PaintUtils.getTextSolidPaint(40);
+        firstText = PaintUtils.getTextSolidPaint(20);
+        firstPath = getFirstLinePath();
+        secondPaint = PaintUtils.getDefaultSolidPaint();
+        secondPaint.setColor(Color.GREEN);
     }
 
     /**
@@ -54,25 +58,38 @@ public class DrawHistogramView extends BaseView {
     @Override
     protected void drawCustomShape(@NonNull Canvas canvas) {
         canvas.drawPath(coordinate, hollowPaint);
-        canvas.drawText("直方图", 300, 700, textPaint);
-        canvas.drawText(nameArrays, 0, nameArrays.length, 110, BASE_LINE, textPaint);
+        canvas.drawText("直方图", 300, 750, textPaint);
+        canvas.drawPath(firstPath , hollowPaint);
+        canvas.drawText("Froyo" , 140 , 720 , firstText);
+        canvas.drawRect(220, 648, 320, 698, secondPaint);
+        canvas.drawText("GB" , 250 , 720 , firstText);
+        canvas.drawRect(330, 648, 430, 698, secondPaint);
+        canvas.drawText("ICS" , 360 , 720 , firstText);
+        canvas.drawRect(440, 508, 540, 698, secondPaint);
+        canvas.drawText("JB" , 470 , 720 , firstText);
+        canvas.drawRect(550, 408, 650, 698, secondPaint);
+        canvas.drawText("KitKat" , 580 , 720 , firstText);
+        canvas.drawRect(660, 358, 760, 698, secondPaint);
+        canvas.drawText("L" , 690 , 720 , firstText);
+        canvas.drawRect(770, 490, 870, 698, secondPaint);
+        canvas.drawText("M" , 800 , 720 , firstText);
     }
 
 
     private Path getLinePath() {
         Path path = new Path();
-        path.moveTo(100, 0);
-        path.lineTo(100, 600);
-        path.rLineTo(600, 0);
+        path.moveTo(100, 100);
+        path.lineTo(100, 700);
+        path.rLineTo(800, 0);
         return path;
     }
 
-    private Paint getTextSolidPaint() {
-        Paint paint = new Paint();
-        paint.setStyle(Paint.Style.FILL);
-        paint.setColor(Color.BLACK);
-        paint.setTextSize(40);
-        paint.setAntiAlias(true);
-        return paint;
+    private Path getFirstLinePath() {
+        Path path = new Path();
+        path.moveTo(110 , 698);
+        path.rLineTo(100, 0);
+        return path;
     }
+
+
 }
